@@ -18,6 +18,7 @@ init(autoreset=True)
 # Create Wireshark-style packet table
 packet_table = PrettyTable()
 
+# Making the Table format
 packet_table.field_names = [
     "No",
     "Source IP",
@@ -33,9 +34,11 @@ packet_count = 0
 
 def process_packet(packet):
 
+    # this counts the packets 
     global packet_count
     packet_count += 1
 
+    # all the haslayer() functions check for the protocol types 
     if packet.haslayer(IP):
 
         src_ip = packet[IP].src
@@ -101,8 +104,8 @@ def process_packet(packet):
 print(Fore.GREEN + "Starting Network Sniffer...")
 print("Press CTRL+C to stop\n")
 
-# Start sniffing packets
+# Start sniffing packets - this is the main function used for the sniffer.
 sniff(
     prn=process_packet,
-    store=False
+    store=False #this prevents storing the packets to save space
 )
